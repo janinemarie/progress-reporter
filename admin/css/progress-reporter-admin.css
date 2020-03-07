@@ -2,3 +2,185 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+
+/* Icon styles */
+#progress-wrapper .dashicons:hover {
+    text-shadow: 0 0 5px #d8d8d8;
+}
+
+#progress-wrapper .dashicons-yes,
+#progress-wrapper .dashicons-yes-alt { /* Ready for review && Complete */
+    color: green;
+}
+
+#progress-wrapper .dashicons-warning { /* Stuck */
+    color: red;
+}
+
+#progress-wrapper .dashicons-editor-alignleft { /* Needs written content */
+    color: darkgoldenrod;
+}
+
+#progress-wrapper .dashicons-align-right { /* Needs images */
+    color: darkgoldenrod;
+}
+
+#progress-wrapper .dashicons-format-image { /* Needs a featured image */
+    color: darkgoldenrod;
+}
+
+#progress-wrapper .dashicons-edit { /* Needs editing */
+    color: darkgoldenrod;
+}
+
+#progress-wrapper .dashicons-schedule { /* Needs a custom layout */
+    color: darkgoldenrod;
+}
+
+.open-close-details {
+    pointer-events: auto;
+    display: block;
+    background: linear-gradient(45deg, transparent 44%, black 44%, black 56%, transparent 56%),
+    linear-gradient(-45deg, transparent 44%, black 44%, black 56%, transparent 56%);
+    width: 20px;
+    height: 20px;
+    max-width: 20px;
+    max-height: 20px;
+    border-radius: 50%;
+    grid-area: xicon;
+}
+
+
+.open-icon {
+    transition-property: all;
+    transition-duration: .3s;
+    display: block;
+    transform: rotate(45deg);
+    pointer-events: auto;
+}
+
+/* Report layout */
+
+div#progress-wrapper {
+    background: white;
+    padding: .1em 1em;
+    border-radius: 3px;
+    box-shadow: 0 0 8px #b7b7b730;
+}
+
+div#posts,
+div#pages {
+    display: block;
+    width: 100%;
+    margin-bottom: 5em;
+}
+
+div.post,
+div.page {
+    border-bottom: 1px solid silver;
+    display: grid;
+    /*   grid-template-areas:
+        "title"
+        "view-edit"
+        "progress"
+        "slug"
+        "published"
+        "mod"; */
+    grid-template-areas:
+            "title progress view-edit xicon"
+            "details details details";
+    grid-column-gap: .5em;
+    /*    align-items: center; */
+}
+
+div.post *,
+div.page * {/* border: 1px solid; */}
+
+div#posts h2,
+div#pages h2 {
+
+}
+
+div.post,
+div.page {
+
+}
+
+div.view-edit-links {
+    grid-area: view-edit;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+div.view-edit-links a{
+    margin: 2px;
+}
+
+span.open-close-details {
+
+}
+
+p.post-title {
+    grid-area: title;
+}
+
+div.post-details {
+    grid-area: details;
+}
+
+p.post-mod {
+    /*  grid-row-end: end; */
+}
+
+@media (max-width: 600px) {
+    p.post-slug {
+        display: none;
+    }
+
+    div.page,
+    div.post {
+        grid-template-areas:
+                "title title view-edit xicon"
+                "details . . .";
+    }
+
+
+}
+
+
+@media (min-width: 601px) {
+    #progress-wrapper {
+        min-width: 700px;
+        max-width: 1280px;
+        overflow-y: hidden;
+        overflow-x: scroll;
+    }
+    div.page,
+    div.post {
+        grid-template-areas:
+                "title progress view-edit xicon"
+                ". details . .";
+        grid-template-columns: 2fr auto 1fr minmax(20px, 50px);
+        align-items: center;
+    }
+    p.post-title {
+        /*     justify-self:  */
+    }
+    p.post-mod {
+        /*     justify-self: ; */
+    }
+    p.post-status {
+        /*     justify-self: center; */
+    }
+    p.post-progress {
+        justify-self: start;
+    }
+
+    span.open-close-details {
+        justify-self: center;
+        /*     border: 1px solid */
+    }
+
+
+}

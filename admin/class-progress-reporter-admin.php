@@ -144,7 +144,7 @@ class Progress_Reporter_Admin {
             'manage_options',
             'progress-report',
             array($this, 'render_progress_report_page_content'),
-            'dashicon-twitter',
+            'dashicons-networking',
             6
         );
 

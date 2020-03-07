@@ -14,4 +14,13 @@
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
-<div>Hi!</div>
+<div class="wrap">
+
+    <?php
+    $spin_up_the_report = new Progress_Reporter_Report();
+
+    call_user_func(array($spin_up_the_report, 'pr_progress_report'), "");
+    ?>
+
+
+</div>
