@@ -40,14 +40,13 @@ class Progress_Reporter_Report {
         $posts_array = get_posts( $get_posts_args );
 
         return( $posts_array );
-    } //end pr_make_a_posts_array()
+    }
 
-    //read out the posts from a specific post type in the format we want
-    public function pr_read_out_posts( $posts_array ) {
+    public function pr_tax_icons_array() {
         //a list of icons for the custom taxonomy terms registered at install
         $custom_tax_icons = array(
             'Ready for review'       => '<span class="dashicons dashicons-yes" title="Ready for review"></span>',
-            'Complete'               => '<span class="dashicons dashicons-yes" title="Ready for review"></span>',
+            'Complete'               => '<span class="dashicons dashicons-yes" title="Complete"></span>',
             'Approved'               => '<span class="dashicons dashicons-yes-alt" title="Approved"></span>',
             'Stuck'                  => '<span class="dashicons dashicons-warning" title="Stuck"></span>',
             'Needs written content'  => '<span class="dashicons dashicons-editor-alignleft" title="Needs written content"></span>',
@@ -57,16 +56,35 @@ class Progress_Reporter_Report {
             'Needs a custom layout'  => '<span class="dashicons dashicons-schedule" title="Needs a custom layout"></span>'
         );
 
+        return $custom_tax_icons;
+    }
+
+    //read out the posts from a specific post type in the format we want
+    public function pr_read_out_posts( $posts_array ) {
+        //a list of icons for the custom taxonomy terms registered at install
+        $custom_tax_icons = $this->pr_tax_icons_array();
+
         if ( $posts_array ) {
             $posts_container_id_lowercase = strtolower( $posts_array->post_type );
             //$posts_container_id = str_replace( ' ', '-', $posts_container_id_lowercase );
             //var_dump($posts_array);
             ?>
             <div id="<?php echo $posts_container_id_lowercase; ?>" class="posts">
-                <h2><?php echo count($posts_array); echo ' '; echo $posts_array[0]->post_type; ?></h2>
+                <h3>
+                    <?php
+                    $count_the_posts_array = count( $posts_array );
+                    $get_the_post_type_name = ucwords( $posts_array[0]->post_type );
+                    echo  $count_the_posts_array.' ';
+                    if ( $count_the_posts_array > 1 ) {
+                        $plural_post_type_name = get_post_type_object( $posts_array[0]->post_type )->labels;
+                        echo $plural_post_type_name->name;
+                    } else {
+                        echo $get_the_post_type_name;
+                    }
+                    ?>
+                </h3>
 
                 <?php
-
                 foreach ( $posts_array as $post ) { ?>
                     <div class="post">
                         <p class="post-title"><?php echo $post->post_title; ?></p>
@@ -108,20 +126,14 @@ class Progress_Reporter_Report {
         $post_types = $this->pr_get_all_post_types();
 
         ?>
+        <h1>Progress on <?php echo get_bloginfo('name'); ?></h1>
         <div id="progress-wrapper">
-            <h2>Progress on <?php echo get_bloginfo('name'); ?></h2>
+
             <?php
             foreach ( $post_types as $post_type ) {
                 $posts_array = $this->pr_make_a_posts_array( $post_type );
                 $this->pr_read_out_posts( $posts_array );
             } //end foreach
-            ?>
-        </div>
-        <div id="key">
-            <?php
-            foreach ( $custom_tax_icons as $icon ) {
-                echo $icon;
-            }
             ?>
         </div>
         <?php
